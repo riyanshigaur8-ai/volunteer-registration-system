@@ -24,12 +24,12 @@ def register():
     )
 
     volunteer = Volunteer(
-        name=data["name"],
-        email=data["email"],
-        phone=data["phone"],
-        password=hashed_password.decode("utf-8")
-    )
-
+    name=data["name"],
+    email=data["email"],
+    phone=data["phone"],
+    password=hashed_password.decode("utf-8"),
+    role="volunteer"
+)
     db.session.add(volunteer)
     db.session.commit()
 
@@ -58,12 +58,19 @@ def login():
         data["password"].encode("utf-8"),
         volunteer.password.encode("utf-8")
     ):
-        return {
-            "message": "Login successful",
-            "id": volunteer.id,
-            "name": volunteer.name,
-            "email": volunteer.email
-        }
+       return {
+    "message": "Login successful",
+    "id": volunteer.id,
+    "name": volunteer.name,
+    "email": volunteer.email,
+    "phone": volunteer.phone,
+    "role": volunteer.role,
+    "dob": volunteer.dob,
+    "address": volunteer.address,
+    "city": volunteer.city,
+    "state": volunteer.state,
+    "pincode": volunteer.pincode
+}
 
     return {"message": "Invalid email or password"}, 401
 

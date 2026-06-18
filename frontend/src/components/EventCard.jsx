@@ -1,160 +1,133 @@
 function EventCard({ event, onJoin }) {
 
+    const categoryImages = {
 
-const getCategoryStyle = () => {
+        Environment:
+            "https://thumbs.dreamstime.com/b/earth-hands-environment-concept-grass-background-usa-38622929.jpg",
 
-    switch (event.category) {
+        Education:
+            "https://img.magnific.com/free-vector/modern-hand-drawn-education-concept_23-2147906438.jpg?semt=ais_hybrid&w=740&q=80",
 
-        case "Environment":
-            return "bg-green-100 text-green-700";
+        Healthcare:
+            "https://idronline.org/wp-content/uploads/2020/12/OGFB4B0.jpg.webp",
+        CommunityService:
+            "https://i.pinimg.com/736x/e2/c2/70/e2c27090b57d4217f22ba9b7a6e6aacd.jpg",
 
-        case "Healthcare":
-            return "bg-red-100 text-red-700";
+        AnimalWelfare:
+            "https://cf-images.assettype.com/thequint%2F2023-10%2Fbbb28404-c8ad-4e24-95b5-e9362affd7fb%2Fworld_wildlife_day_concept_nature_reserve_conserve_wildlife_reserve_tiger_deer_global_warming_jpg_s_.jpg?auto=format%2Ccompress&fmt=webp&width=720&w=1200"
 
-        case "Education":
-            return "bg-blue-100 text-blue-700";
+    };
 
-        case "Community Service":
-            return "bg-purple-100 text-purple-700";
+    return (
 
-        case "Animal Welfare":
-            return "bg-yellow-100 text-yellow-700";
-
-        default:
-            return "bg-gray-100 text-gray-700";
-
-    }
-
-};
-
-const getCategoryIcon = () => {
-
-    switch (event.category) {
-
-        case "Environment":
-            return "🌱";
-
-        case "Healthcare":
-            return "🩺";
-
-        case "Education":
-            return "📚";
-
-        case "Community Service":
-            return "🤝";
-
-        case "Animal Welfare":
-            return "🐶";
-
-        default:
-            return "📌";
-
-    }
-
-};
-
-return (
-
-    <div
-        className="
-        bg-white
-        rounded-3xl
-        overflow-hidden
-        shadow-md
-        hover:shadow-2xl
-        transition-all
-        duration-300
-        "
-    >
-
-        <img
-            src="https://images.unsplash.com/photo-1469571486292-b53601020f88"
-            alt="Volunteer Event"
+        <div
             className="
-            w-full
-            h-52
-            object-cover
+            bg-white
+            rounded-2xl
+            shadow-md
+            overflow-hidden
+            hover:shadow-2xl
+            hover:-translate-y-2
+            transition-all
+            duration-300
             "
-        />
+        >
 
-        <div className="p-6">
-
-            <span
-                className={`
-                ${getCategoryStyle()}
-                px-3
-                py-1
-                rounded-full
-                text-sm
-                font-medium
-                `}
-            >
-                {getCategoryIcon()} {event.category}
-            </span>
-
-            <h2
+            <img
+                src={
+                    categoryImages[
+                        event.category
+                    ] ||
+                    "https://images.unsplash.com/photo-1529156069898-49953e39b3ac"
+                }
+                alt={event.title}
                 className="
-                text-2xl
-                font-bold
-                mt-4
+                w-full
+                h-52
+                object-cover
                 "
-            >
-                {event.title}
-            </h2>
+            />
 
-            <p
-                className="
-                text-gray-600
-                mt-3
-                "
-            >
-                {event.description}
-            </p>
+            <div className="p-6">
 
-            <div
-                className="
-                mt-4
-                space-y-2
-                text-gray-700
-                "
-            >
+                <span
+                    className="
+                    bg-green-100
+                    text-green-700
+                    px-3
+                    py-1
+                    rounded-full
+                    text-sm
+                    font-semibold
+                    "
+                >
+                    {event.category || "Community"}
+                </span>
 
-                <p>
-                    📍 {event.location}
+                <h2
+                    className="
+                    text-2xl
+                    font-bold
+                    mt-4
+                    text-slate-800
+                    "
+                >
+                    {event.title}
+                </h2>
+
+                <p
+                    className="
+                    text-gray-600
+                    mt-3
+                    line-clamp-3
+                    "
+                >
+                    {event.description}
                 </p>
 
-                <p>
-                    📅 {event.date}
-                </p>
+                <div
+                    className="
+                    mt-4
+                    space-y-2
+                    text-gray-700
+                    "
+                >
+
+                    <p>
+                        📍 {event.location}
+                    </p>
+
+                    <p>
+                        📅 {event.date}
+                    </p>
+
+                </div>
+
+                <button
+                    onClick={() =>
+                        onJoin(event.id)
+                    }
+                    className="
+                    mt-6
+                    bg-blue-600
+                    hover:bg-blue-700
+                    text-white
+                    px-4
+                    py-3
+                    rounded-xl
+                    w-full
+                    font-semibold
+                    transition-all
+                    "
+                >
+                    Join Event
+                </button>
 
             </div>
 
-            <button
-                onClick={() =>
-                    onJoin(event.id)
-                }
-                className="
-                mt-5
-                bg-blue-600
-                hover:bg-blue-700
-                text-white
-                px-4
-                py-3
-                rounded-xl
-                w-full
-                font-semibold
-                transition
-                "
-            >
-                Join Event
-            </button>
-
         </div>
 
-    </div>
-
-);
-
+    );
 
 }
 

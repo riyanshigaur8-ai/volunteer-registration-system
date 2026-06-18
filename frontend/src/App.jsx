@@ -10,6 +10,7 @@ import MyEvents from "./pages/MyEvents";
 import Profile from "./pages/Profile";
 import Admin from "./pages/Admin";
 import AdminRoute from "./components/AdminRoute";
+import AdminAccess from "./pages/AdminAccess";
 
 function App() {
 
@@ -61,6 +62,11 @@ function App() {
                     path="/profile"
                     element={<Profile />}
                 />
+                
+                <Route
+                    path="/admin-access"
+                    element={<AdminAccess />}
+                />
 
                 <Route
                     path="/admin"
@@ -70,6 +76,7 @@ function App() {
                         </AdminRoute>
                     }
                 />
+                
 
             </Routes>
 

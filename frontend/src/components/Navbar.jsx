@@ -66,15 +66,9 @@ function Navbar() {
                     Profile
                 </Link>
 
-                {
-                    user?.role === "admin" && (
-
-                        <Link to="/admin">
-                            Admin Panel
-                        </Link>
-
-                    )
-                }
+                <Link to="/admin-access">
+                    Admin Access
+                </Link>
 
                 <span>
                     👤 {user?.name}

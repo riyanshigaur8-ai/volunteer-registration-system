@@ -81,16 +81,24 @@ def create_event():
     data = request.json
 
     event = Event(
-    title=data["title"],
-    description=data["description"],
-    date=data["date"],
-    location=data["location"],
-    category=data["category"]
-)
+        title=data["title"],
+        description=data["description"],
+        date=data["date"],
+        location=data["location"],
+        category=data["category"],
+        image_url=data.get(
+            "image_url",
+            ""
+        )
+    )
+
     db.session.add(event)
     db.session.commit()
 
-    return {"message": "Event created successfully"}
+    return {
+        "message":
+        "Event created successfully"
+    }
 
 @app.route("/events", methods=["GET"])
 def get_events():
@@ -100,18 +108,47 @@ def get_events():
     result = []
 
     for event in events:
+
         result.append({
-            
+
             "id": event.id,
             "title": event.title,
             "description": event.description,
             "date": event.date,
             "location": event.location,
-            "category": event.category
+            "category": event.category,
+            "image_url": event.image_url
 
         })
 
     return result
+
+
+@app.route("/events/<int:event_id>", methods=["PUT"])
+def update_event(event_id):
+
+    event = Event.query.get(event_id)
+
+    if not event:
+
+        return {
+            "message": "Event not found"
+        }, 404
+
+    data = request.json
+
+    event.title = data["title"]
+    event.description = data["description"]
+    event.date = data["date"]
+    event.location = data["location"]
+    event.category = data["category"]
+
+    db.session.commit()
+
+    return {
+        "message":
+        "Event updated successfully"
+    }
 
 @app.route("/join-event", methods=["POST"])
 def join_event():
@@ -227,6 +264,7 @@ def delete_event(id):
     return {
         "message": "Event deleted successfully"
     }
+
 
 with app.app_context():
     db.create_all()

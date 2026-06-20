@@ -70,6 +70,10 @@ class Event(db.Model):
         db.String(50)
     )
 
+    image_url = db.Column(
+        db.String(500)
+    )
+
 class Registration(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 

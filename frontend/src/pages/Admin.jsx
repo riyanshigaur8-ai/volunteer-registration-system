@@ -17,18 +17,24 @@ const [stats, setStats] = useState({
 const [volunteers, setVolunteers] =
     useState([]);
 
+const [events, setEvents] =
+    useState([]);
+
 const [eventData, setEventData] =
     useState({
         title: "",
         description: "",
         date: "",
         location: "",
-        category: "Environment"
+        category: "Environment",
+        imageType: "default",
+        image_url: ""
     });
 
 useEffect(() => {
     fetchStats();
     fetchVolunteers();
+    fetchEvents();
 }, []);
 
 const fetchStats = async () => {
@@ -115,12 +121,14 @@ const createEvent = async (e) => {
         );
 
        setEventData({
-            title: "",
-            description: "",
-            date: "",
-            location: "",
-            category: "Environment"
-        });
+    title: "",
+    description: "",
+    date: "",
+    location: "",
+    category: "Environment",
+    imageType: "default",
+    image_url: ""
+});
 
         fetchStats();
 
@@ -128,6 +136,62 @@ const createEvent = async (e) => {
 
         alert(
             "Failed to create event"
+        );
+
+    }
+
+};
+
+const fetchEvents = async () => {
+
+    try {
+
+        const res =
+            await API.get(
+                "/events"
+            );
+
+        setEvents(
+            res.data
+        );
+
+    } catch (error) {
+
+        console.log(error);
+
+    }
+
+};
+
+const deleteEvent = async (
+    eventId
+) => {
+
+    const confirmDelete =
+        window.confirm(
+            "Delete this event?"
+        );
+
+    if (!confirmDelete)
+        return;
+
+    try {
+
+        const res =
+            await API.delete(
+                `/events/${eventId}`
+            );
+
+        alert(
+            res.data.message
+        );
+
+        fetchEvents();
+
+    } catch (error) {
+
+        alert(
+            "Failed to delete event"
         );
 
     }
@@ -262,6 +326,23 @@ return (
                     "
                 >
                     Create Event
+                </button>
+
+                <button
+                    onClick={() =>
+                        setActiveSection(
+                            "manage"
+                        )
+                    }
+                    className="
+                    bg-red-600
+                    text-white
+                    px-6
+                    py-3
+                    rounded-xl
+                    "
+                >
+                    Manage Events
                 </button>
 
             </div>
@@ -460,6 +541,96 @@ return (
 
             )}
 
+            {
+    activeSection ===
+    "manage" && (
+
+        <div
+            className="
+            bg-white
+            rounded-3xl
+            p-8
+            shadow-md
+            "
+        >
+
+            <h2
+                className="
+                text-2xl
+                font-bold
+                mb-6
+                "
+            >
+                Manage Events
+            </h2>
+
+            {
+                events.map(
+                    (event) => (
+
+                        <div
+                            key={
+                                event.id
+                            }
+                            className="
+                            border
+                            rounded-xl
+                            p-4
+                            mb-4
+                            flex
+                            justify-between
+                            items-center
+                            "
+                        >
+
+                            <div>
+
+                                <h3
+                                    className="
+                                    font-bold
+                                    "
+                                >
+                                    {
+                                        event.title
+                                    }
+                                </h3>
+
+                                <p>
+                                    {
+                                        event.location
+                                    }
+                                </p>
+
+                            </div>
+
+                            <button
+                                onClick={() =>
+                                    deleteEvent(
+                                        event.id
+                                    )
+                                }
+                                className="
+                                bg-red-600
+                                text-white
+                                px-4
+                                py-2
+                                rounded-lg
+                                "
+                            >
+                                Delete
+                            </button>
+
+                        </div>
+
+                    )
+                )
+            }
+
+        </div>
+
+    )
+}
+
             {activeSection ===
                 "create" && (
 
@@ -597,6 +768,48 @@ return (
 
                                 </select>
 
+                                <select
+    name="imageType"
+    value={eventData.imageType}
+    onChange={handleChange}
+    className="
+    w-full
+    border
+    p-3
+    rounded-xl
+    mb-4
+    "
+>
+    <option value="default">
+        Default Category Image
+    </option>
+
+    <option value="custom">
+        Custom Image URL
+    </option>
+</select>
+
+{
+    eventData.imageType === "custom" && (
+
+        <input
+            type="text"
+            name="image_url"
+            placeholder="Paste Image URL"
+            value={eventData.image_url}
+            onChange={handleChange}
+            className="
+            w-full
+            border
+            p-3
+            rounded-xl
+            mb-4
+            "
+        />
+
+    )
+}
+
                         <button
                             type="submit"
                             className="
@@ -623,6 +836,7 @@ return (
 
 
 }
+
 
 export default Admin;
                                        

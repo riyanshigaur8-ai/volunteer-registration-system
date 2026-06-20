@@ -10,10 +10,11 @@ function EventCard({ event, onJoin }) {
 
         Healthcare:
             "https://idronline.org/wp-content/uploads/2020/12/OGFB4B0.jpg.webp",
-        CommunityService:
+
+        "Community Service":
             "https://i.pinimg.com/736x/e2/c2/70/e2c27090b57d4217f22ba9b7a6e6aacd.jpg",
 
-        AnimalWelfare:
+        "Animal Welfare":
             "https://cf-images.assettype.com/thequint%2F2023-10%2Fbbb28404-c8ad-4e24-95b5-e9362affd7fb%2Fworld_wildlife_day_concept_nature_reserve_conserve_wildlife_reserve_tiger_deer_global_warming_jpg_s_.jpg?auto=format%2Ccompress&fmt=webp&width=720&w=1200"
 
     };
@@ -35,10 +36,12 @@ function EventCard({ event, onJoin }) {
 
             <img
                 src={
-                    categoryImages[
-                        event.category
-                    ] ||
-                    "https://images.unsplash.com/photo-1529156069898-49953e39b3ac"
+                    event.image_url
+                        ? event.image_url
+                        : categoryImages[
+                            event.category
+                        ] ||
+                        "https://images.unsplash.com/photo-1529156069898-49953e39b3ac"
                 }
                 alt={event.title}
                 className="

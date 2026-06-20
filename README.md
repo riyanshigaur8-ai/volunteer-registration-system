@@ -2,7 +2,7 @@
 
 A full-stack web application for managing volunteer registrations, events, and coordination between volunteers and admins.
 
-**Live Demo:** [volunteerhub-frontend.vercel.app](https://volunteerhub-frontend.vercel.app) &nbsp;|&nbsp; **API:** [volunteerhub-backend-90fr.onrender.com](https://volunteerhub-backend-90fr.onrender.com)
+**Live Demo:** [volunteerhub-frontend.vercel.app](https://volunteer-registration-system-cyan.vercel.app/) &nbsp;|&nbsp; **API:** [volunteerhub-backend-90fr.onrender.com](https://volunteerhub-backend-90fr.onrender.com)
 
 > ⚠️ **Note:** The backend is hosted on Render's free tier and may take **30–50 seconds** to respond on the first request after a period of inactivity (cold start). Please wait before assuming it's down.
 

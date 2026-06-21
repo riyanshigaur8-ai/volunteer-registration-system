@@ -265,6 +265,38 @@ def delete_event(id):
         "message": "Event deleted successfully"
     }
 
+@app.route(
+    "/profile/<int:user_id>",
+    methods=["PUT"]
+)
+def update_profile(user_id):
+
+    volunteer = Volunteer.query.get(
+        user_id
+    )
+
+    if not volunteer:
+
+        return {
+            "message":
+            "User not found"
+        }, 404
+
+    data = request.json
+
+    volunteer.phone = data["phone"]
+    volunteer.dob = data["dob"]
+    volunteer.address = data["address"]
+    volunteer.city = data["city"]
+    volunteer.state = data["state"]
+    volunteer.pincode = data["pincode"]
+
+    db.session.commit()
+
+    return {
+        "message":
+        "Profile updated successfully"
+    }
 
 with app.app_context():
     db.create_all()

@@ -92,6 +92,76 @@ function Profile() {
                             your participation.
                         </p>
 
+                        <div
+                            className="
+                            mt-4
+                            bg-white/20
+                            p-4
+                            rounded-xl
+                            "
+                        >
+                            <p>
+                                Profile Status: Active ✅
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div
+                        className="
+                        bg-white
+                        rounded-3xl
+                        shadow-md
+                        p-8
+                        mb-8
+                        text-center
+                        "
+                    >
+
+                        <img
+                            src={`https://ui-avatars.com/api/?name=${user?.name}&background=2563eb&color=fff&size=200`}
+                            alt="Profile"
+                            className="
+                            w-32
+                            h-32
+                            rounded-full
+                            mx-auto
+                            mb-4
+                            shadow-lg
+                            "
+                        />
+
+                        <h2
+                            className="
+                            text-3xl
+                            font-bold
+                            "
+                        >
+                            {user?.name}
+                        </h2>
+
+                        <p
+                            className="
+                            text-gray-500
+                            "
+                        >
+                            {user?.email}
+                        </p>
+
+                        <span
+                            className="
+                            inline-block
+                            mt-3
+                            bg-blue-100
+                            text-blue-700
+                            px-4
+                            py-2
+                            rounded-full
+                            "
+                        >
+                            {user?.role || "Volunteer"}
+                        </span>
+
                     </div>
 
                     <div
@@ -102,6 +172,16 @@ function Profile() {
                         p-8
                         "
                     >
+
+                        <h2
+                            className="
+                            text-2xl
+                            font-bold
+                            mb-6
+                            "
+                        >
+                            Personal Information
+                        </h2>
 
                         <div
                             className="
@@ -209,29 +289,102 @@ function Profile() {
                             className="
                             text-2xl
                             font-bold
-                            mb-4
+                            mb-6
                             "
                         >
-                            Volunteer Statistics 📊
+                            Volunteer Activity 📊
                         </h2>
 
                         <div
                             className="
-                            text-5xl
-                            font-bold
-                            text-blue-600
+                            grid
+                            md:grid-cols-3
+                            gap-6
                             "
                         >
-                            {joinedEvents}
-                        </div>
 
-                        <p
-                            className="
-                            text-gray-500
-                            "
-                        >
-                            Events Joined
-                        </p>
+                            <div
+                                className="
+                                bg-blue-50
+                                p-6
+                                rounded-2xl
+                                text-center
+                                "
+                            >
+                                <h1
+                                    className="
+                                    text-5xl
+                                    font-bold
+                                    text-blue-600
+                                    "
+                                >
+                                    {joinedEvents}
+                                </h1>
+
+                                <p>
+                                    Events Joined
+                                </p>
+
+                            </div>
+
+                            <div
+                                className="
+                                bg-green-50
+                                p-6
+                                rounded-2xl
+                                text-center
+                                "
+                            >
+                                <h1
+                                    className="
+                                    text-5xl
+                                    font-bold
+                                    text-green-600
+                                    "
+                                >
+                                    {
+                                        user?.city
+                                            ? 100
+                                            : 50
+                                    }
+                                    %
+                                </h1>
+
+                                <p>
+                                    Profile Completion
+                                </p>
+
+                            </div>
+
+                            <div
+                                className="
+                                bg-purple-50
+                                p-6
+                                rounded-2xl
+                                text-center
+                                "
+                            >
+                                <h1
+                                    className="
+                                    text-5xl
+                                    font-bold
+                                    text-purple-600
+                                    "
+                                >
+                                    {
+                                        user?.role === "admin"
+                                            ? "Yes"
+                                            : "No"
+                                    }
+                                </h1>
+
+                                <p>
+                                    Admin Access
+                                </p>
+
+                            </div>
+
+                        </div>
 
                     </div>
 

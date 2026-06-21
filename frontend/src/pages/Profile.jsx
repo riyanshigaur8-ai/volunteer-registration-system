@@ -8,6 +8,19 @@ function Profile() {
     const [joinedEvents, setJoinedEvents] =
         useState(0);
 
+    const [editing, setEditing] =
+    useState(false);
+
+    // const [profileData, setProfileData] =
+    // useState({
+    //     phone: "",
+    //     dob: "",
+    //     address: "",
+    //     city: "",
+    //     state: "",
+    //     pincode: ""
+    // });
+
     const user = JSON.parse(
         localStorage.getItem("user")
     );
@@ -16,7 +29,26 @@ function Profile() {
 
         fetchJoinedEvents();
 
+        setProfileData({
+    phone: user?.phone || "",
+    dob: user?.dob || "",
+    address: user?.address || "",
+    city: user?.city || "",
+    state: user?.state || "",
+    pincode: user?.pincode || ""
+});
+
     }, []);
+
+    const [profileData, setProfileData] =
+    useState({
+        phone: user?.phone || "",
+        dob: user?.dob || "",
+        address: user?.address || "",
+        city: user?.city || "",
+        state: user?.state || "",
+        pincode: user?.pincode || ""
+    });
 
     const fetchJoinedEvents = async () => {
 
@@ -38,6 +70,62 @@ function Profile() {
         }
 
     };
+
+    const handleProfileChange = (e) => {
+
+    setProfileData({
+
+        ...profileData,
+
+        [e.target.name]:
+            e.target.value
+
+    });
+
+};
+
+    const saveProfile = async () => {
+
+    try {
+
+        const res =
+            await API.put(
+                `/profile/${user.id}`,
+                profileData
+            );
+
+        alert(
+            res.data.message
+        );
+
+        const updatedUser = {
+
+            ...user,
+
+            ...profileData
+
+        };
+
+        localStorage.setItem(
+            "user",
+            JSON.stringify(
+                updatedUser
+            )
+        );
+
+        window.location.reload();
+
+    } catch (error) {
+
+        console.log(error);
+
+        alert(
+            "Failed to update profile"
+        );
+
+    }
+
+};
 
     return (
 
@@ -161,7 +249,25 @@ function Profile() {
                         >
                             {user?.role || "Volunteer"}
                         </span>
-
+ 
+                        <button
+                            onClick={() =>
+                                setEditing(true)
+                            }
+                            className="
+                            block
+                            mx-auto
+                            mt-4
+                            bg-blue-600
+                            text-white
+                            px-6
+                            py-3
+                            rounded-xl
+                            hover:bg-blue-700
+                            "
+                        >
+                            Edit Profile
+                        </button>
                     </div>
 
                     <div
@@ -391,6 +497,174 @@ function Profile() {
                 </div>
 
             </div>
+
+            {
+    editing && (
+
+        <div
+            className="
+            fixed
+            inset-0
+            bg-black/50
+            flex
+            justify-center
+            items-center
+            z-50
+            "
+        >
+
+            <div
+                className="
+                bg-white
+                rounded-3xl
+                p-8
+                w-full
+                max-w-2xl
+                "
+            >
+
+                <h2
+                    className="
+                    text-3xl
+                    font-bold
+                    mb-6
+                    "
+                >
+                    Edit Profile ✏️
+                </h2>
+
+                <div
+                    className="
+                    grid
+                    md:grid-cols-2
+                    gap-4
+                    "
+                >
+
+                    <input
+                        type="text"
+                        name="phone"
+                        placeholder="Phone"
+                        value={profileData.phone}
+                        onChange={handleProfileChange}
+                        className="
+                        border
+                        p-3
+                        rounded-xl
+                        "
+                    />
+
+                    <input
+                        type="date"
+                        name="dob"
+                        value={profileData.dob}
+                        onChange={handleProfileChange}
+                        className="
+                        border
+                        p-3
+                        rounded-xl
+                        "
+                    />
+
+                    <input
+                        type="text"
+                        name="city"
+                        placeholder="City"
+                        value={profileData.city}
+                        onChange={handleProfileChange}
+                        className="
+                        border
+                        p-3
+                        rounded-xl
+                        "
+                    />
+
+                    <input
+                        type="text"
+                        name="state"
+                        placeholder="State"
+                        value={profileData.state}
+                        onChange={handleProfileChange}
+                        className="
+                        border
+                        p-3
+                        rounded-xl
+                        "
+                    />
+
+                    <input
+                        type="text"
+                        name="pincode"
+                        placeholder="Pincode"
+                        value={profileData.pincode}
+                        onChange={handleProfileChange}
+                        className="
+                        border
+                        p-3
+                        rounded-xl
+                        "
+                    />
+
+                </div>
+
+                <textarea
+                    name="address"
+                    placeholder="Address"
+                    value={profileData.address}
+                    onChange={handleProfileChange}
+                    className="
+                    border
+                    p-3
+                    rounded-xl
+                    w-full
+                    mt-4
+                    "
+                />
+
+                <div
+                    className="
+                    flex
+                    gap-4
+                    mt-6
+                    "
+                >
+
+                    <button
+                        onClick={saveProfile}
+                        className="
+                        bg-green-600
+                        text-white
+                        px-6
+                        py-3
+                        rounded-xl
+                        "
+                    >
+                        Save Changes
+                    </button>
+                    
+                    <button
+                        onClick={() =>
+                            setEditing(false)
+                        }
+                        className="
+                        bg-gray-500
+                        text-white
+                        px-6
+                        py-3
+                        rounded-xl
+                        "
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    )
+}
 
             <Footer />
 

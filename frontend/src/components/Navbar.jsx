@@ -1,8 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useTheme } from "../context/ThemeContent";
 
 function Navbar() {
 
     const navigate = useNavigate();
+
+    const {
+        darkMode,
+        toggleDarkMode
+    } = useTheme();
 
     const user = JSON.parse(
         localStorage.getItem("user")
@@ -61,7 +67,7 @@ function Navbar() {
                 <Link to="/my-events">
                     My Events
                 </Link>
- 
+
                 <Link to="/profile">
                     Profile
                 </Link>
@@ -73,9 +79,29 @@ function Navbar() {
                 <span>
                     👤 {user?.name}
                 </span>
+
                 <span>
                     Role: {user?.role}
                 </span>
+
+                <button
+                    onClick={toggleDarkMode}
+                    className="
+                    bg-slate-800
+                    text-white
+                    px-4
+                    py-2
+                    rounded-lg
+                    font-semibold
+                    hover:bg-slate-700
+                    "
+                >
+                    {
+                        darkMode
+                            ? "☀️ Light"
+                            : "🌙 Dark"
+                    }
+                </button>
 
                 <button
                     onClick={handleLogout}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTheme } from "../context/ThemeContent";
 import Navbar from "../components/Navbar";
 import API from "../services/api";
 import Footer from "../components/Footer";
@@ -11,15 +12,8 @@ function Profile() {
     const [editing, setEditing] =
     useState(false);
 
-    // const [profileData, setProfileData] =
-    // useState({
-    //     phone: "",
-    //     dob: "",
-    //     address: "",
-    //     city: "",
-    //     state: "",
-    //     pincode: ""
-    // });
+    const { darkMode } =
+    useTheme();
 
     const user = JSON.parse(
         localStorage.getItem("user")
@@ -133,12 +127,16 @@ function Profile() {
             <Navbar />
 
             <div
-                className="
-                min-h-screen
-                bg-slate-100
-                p-8
-                "
-            >
+                    className={`
+                    min-h-screen
+                    p-8
+                    ${
+                        darkMode
+                            ? "bg-slate-900 text-white"
+                            : "bg-slate-100"
+                    }
+                    `}
+                >
 
                 <div
                     className="
@@ -197,7 +195,7 @@ function Profile() {
 
                     <div
                         className="
-                        bg-white
+                        
                         rounded-3xl
                         shadow-md
                         p-8

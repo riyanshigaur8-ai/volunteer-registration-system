@@ -34,10 +34,11 @@ class Certificate(db.Model):
     )
 
     attendance_id = db.Column(
-        db.Integer,
-        db.ForeignKey("attendance.id"),
-        nullable=False
-    )
+    db.Integer,
+    db.ForeignKey("attendance.id"),
+    unique=True,
+    nullable=False
+)
 
     hours = db.Column(
         db.Float,

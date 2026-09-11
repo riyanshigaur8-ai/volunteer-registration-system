@@ -120,51 +120,51 @@ class EventSkill(db.Model):
     __tablename__ = "event_skills"
 
     id = db.Column(db.Integer, primary_key=True)
-
     event_id = db.Column(
         db.Integer,
         db.ForeignKey("events.id"),
         nullable=False
     )
-
     skill_id = db.Column(
         db.Integer,
         db.ForeignKey("skills.id"),
         nullable=False
     )
+    required_level = db.Column(db.String(30))
 
-    required_level = db.Column(
-        db.String(30)
-    )
-
-    event = db.relationship(
-        "Event",
-        back_populates="required_skills"
-    )
-
+    event = db.relationship("Event", back_populates="required_skills")
     skill = db.relationship("Skill")
 
+    __table_args__ = (
+        db.UniqueConstraint(
+            "event_id",
+            "skill_id",
+            name="uq_event_skill"
+        ),
+    )
 
 class EventInterest(db.Model):
     __tablename__ = "event_interests"
 
     id = db.Column(db.Integer, primary_key=True)
-
     event_id = db.Column(
         db.Integer,
         db.ForeignKey("events.id"),
         nullable=False
     )
-
     interest_id = db.Column(
         db.Integer,
         db.ForeignKey("interests.id"),
         nullable=False
     )
 
-    event = db.relationship(
-        "Event",
-        back_populates="interests"
-    )
-
+    event = db.relationship("Event", back_populates="interests")
     interest = db.relationship("Interest")
+
+    __table_args__ = (
+        db.UniqueConstraint(
+            "event_id",
+            "interest_id",
+            name="uq_event_interest"
+        ),
+    )

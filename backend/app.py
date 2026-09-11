@@ -5,6 +5,7 @@ from flask_jwt_extended import JWTManager
 from config import Config
 from extensions import db, migrate
 from routes.auth import auth_bp
+from routes.organizations import organizations_bp
 
 from models import (
     User,
@@ -36,8 +37,9 @@ def create_app():
 
     db.init_app(app)
     migrate.init_app(app, db)
-    
+
     app.register_blueprint(auth_bp)
+    app.register_blueprint(organizations_bp)
 
     @app.route("/")
     def home():

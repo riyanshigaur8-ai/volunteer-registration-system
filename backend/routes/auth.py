@@ -4,6 +4,7 @@ from werkzeug.security import check_password_hash
 
 from models import User
 from services.auth_service import register_user
+from utils.permissions import role_required
 
 
 from flask_jwt_extended import (
@@ -118,4 +119,11 @@ def login():
             "email": user.email,
             "role": user.role
         }
+    }, 200
+
+@auth_bp.get("/volunteer-test")
+@role_required("VOLUNTEER")
+def volunteer_test():
+    return {
+        "message": "Volunteer access granted."
     }, 200

@@ -1,8 +1,11 @@
 from flask import Flask
 from flask_cors import CORS
+from flask_jwt_extended import JWTManager
 
 from config import Config
 from extensions import db, migrate
+from routes.auth import auth_bp
+
 from models import (
     User,
     VolunteerProfile,
@@ -27,10 +30,14 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
+    JWTManager(app)
+
     CORS(app)
 
     db.init_app(app)
     migrate.init_app(app, db)
+    
+    app.register_blueprint(auth_bp)
 
     @app.route("/")
     def home():

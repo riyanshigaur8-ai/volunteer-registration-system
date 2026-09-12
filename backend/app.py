@@ -8,6 +8,7 @@ from extensions import db, migrate
 from routes.auth import auth_bp
 from routes.organizations import organizations_bp
 from routes.events import events_bp
+from routes.applications import applications_bp
 
 from models import (
     User,
@@ -43,6 +44,7 @@ def create_app():
     app.register_blueprint(auth_bp)
     app.register_blueprint(organizations_bp)
     app.register_blueprint(events_bp)
+    app.register_blueprint(applications_bp)
     
     @app.route("/")
     def home():

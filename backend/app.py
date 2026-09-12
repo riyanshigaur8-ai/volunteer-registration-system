@@ -10,6 +10,7 @@ from routes.organizations import organizations_bp
 from routes.events import events_bp
 from routes.applications import applications_bp
 from routes.attendance import attendance_bp
+from routes.certificates import certificates_bp
 
 from models import (
     User,
@@ -47,6 +48,7 @@ def create_app():
     app.register_blueprint(events_bp)
     app.register_blueprint(applications_bp)
     app.register_blueprint(attendance_bp)
+    app.register_blueprint(certificates_bp)
     
     @app.route("/")
     def home():

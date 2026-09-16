@@ -26,6 +26,8 @@ def get_current_user():
     if not user:
         return {"error": "User not found."}, 404
 
+    volunteer_profile = user.volunteer_profile
+
     return {
         "user": {
             "id": user.id,
@@ -33,9 +35,13 @@ def get_current_user():
             "email": user.email,
             "role": user.role,
             "status": user.status,
+            "total_hours": (
+                volunteer_profile.total_hours
+                if volunteer_profile
+                else 0
+            ),
         }
     }, 200
-
 
 @auth_bp.post("/register")
 def register():

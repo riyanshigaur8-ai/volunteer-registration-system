@@ -25,3 +25,19 @@ export async function getMyCertificates() {
   );
   return response.data.certificates;
 }
+
+export async function getEvent(eventId: number) {
+  const response = await api.get<{ event: Event }>(
+    `/events/${eventId}`,
+  );
+
+  return response.data.event;
+}
+
+export async function applyToEvent(eventId: number) {
+  const response = await api.post(
+    `/events/${eventId}/applications`,
+  );
+
+  return response.data;
+}

@@ -7,6 +7,9 @@ import Dashboard from "./pages/Dashboard";
 import Events from "./pages/Events";
 import EventDetails from "./pages/EventDetails";
 import Navbar from "./components/Navbar";
+import Applications from "./pages/Applications";
+import Certificates from "./pages/Certificates";
+import VerifyCertificate from "./pages/VerifyCertificate";
 
 function Placeholder({ title }: { title: string }) {
   return (
@@ -38,14 +41,13 @@ export default function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/events/:eventId" element={<EventDetails />} />
 
-        <Route
-          path="/applications"
-          element={<Placeholder title="My Applications" />}
-        />
+        <Route path="/applications" element={<Applications />} />
+
+        <Route path="/certificates" element={<Certificates />} />
 
         <Route
-          path="/certificates"
-          element={<Placeholder title="My Certificates" />}
+           path="/certificates/verify/:certificateNumber"
+           element={<VerifyCertificate />}
         />
       </Routes>
     </BrowserRouter>

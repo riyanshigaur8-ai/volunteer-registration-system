@@ -41,3 +41,19 @@ export async function applyToEvent(eventId: number) {
 
   return response.data;
 }
+
+export async function cancelApplication(applicationId: number) {
+  const response = await api.post(
+    `/applications/${applicationId}/cancel`,
+  );
+
+  return response.data;
+}
+
+export async function verifyCertificate(certificateNumber: string) {
+  const response = await api.get(
+    `/certificates/verify/${encodeURIComponent(certificateNumber)}`,
+  );
+
+  return response.data;
+}

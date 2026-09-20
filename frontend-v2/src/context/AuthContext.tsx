@@ -55,26 +55,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     restoreSession();
   }, []);
 
-  const login = async (email: string, password: string) => {
+ const login = async (email: string, password: string) => {
   const response = await api.post<AuthResponse>("/auth/login", {
     email,
     password,
   });
 
-  console.log("LOGIN RESPONSE:", response.data);
-
   localStorage.setItem("access_token", response.data.token);
-
-  console.log(
-    "TOKEN SAVED:",
-    Boolean(localStorage.getItem("access_token")),
-  );
-
   setToken(response.data.token);
-  setUser(response.data.user);
+
+  const meResponse = await api.get<{ user: User }>("/auth/me");
+
+  setUser(meResponse.data.user);
 };
 
- const register = async (
+const register = async (
   name: string,
   email: string,
   password: string,
@@ -86,9 +81,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   });
 
   localStorage.setItem("access_token", response.data.token);
-
   setToken(response.data.token);
-  setUser(response.data.user);
+
+  const meResponse = await api.get<{ user: User }>("/auth/me");
+
+  setUser(meResponse.data.user);
 };
 
   const logout = () => {

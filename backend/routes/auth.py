@@ -21,12 +21,25 @@ auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
 @jwt_required()
 def get_current_user():
     user_id = get_jwt_identity()
+
     user = User.query.get(int(user_id))
 
     if not user:
         return {"error": "User not found."}, 404
 
     volunteer_profile = user.volunteer_profile
+
+    organizations = [
+        {
+            "id": membership.organization.id,
+            "name": membership.organization.name,
+            "slug": membership.organization.slug,
+            "role": membership.role,
+            "status": membership.status,
+        }
+        for membership in user.organization_memberships
+        if membership.status == "ACTIVE"
+    ]
 
     return {
         "user": {
@@ -40,6 +53,7 @@ def get_current_user():
                 if volunteer_profile
                 else 0
             ),
+            "organizations": organizations,
         }
     }, 200
 

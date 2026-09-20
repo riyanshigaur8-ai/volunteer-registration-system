@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar";
 import Applications from "./pages/Applications";
 import Certificates from "./pages/Certificates";
 import VerifyCertificate from "./pages/VerifyCertificate";
+import OrganizationDashboard from "./pages/organizations/OrganizationDashboard";
 
 function Placeholder({ title }: { title: string }) {
   return (
@@ -49,6 +50,10 @@ export default function App() {
            path="/certificates/verify/:certificateNumber"
            element={<VerifyCertificate />}
         />
+
+        <Route path = "/organizations"
+          element ={<OrganizationDashboard />}
+          />
       </Routes>
     </BrowserRouter>
   );

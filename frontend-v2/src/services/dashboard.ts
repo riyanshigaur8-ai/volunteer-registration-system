@@ -57,3 +57,31 @@ export async function verifyCertificate(certificateNumber: string) {
 
   return response.data;
 }
+
+export async function getOrganizationEvents(organizationId: number) {
+  const response = await api.get(
+    `/organizations/${organizationId}/events`,
+  );
+
+  return response.data.events;
+}
+
+export async function getOrganizationApplications(
+  organizationId: number,
+) {
+  const response = await api.get(
+    `/organizations/${organizationId}/applications`,
+  );
+
+  return response.data.applications;
+}
+
+export async function getOrganization(
+  organizationId: number,
+) {
+  const response = await api.get(
+    `/organizations/${organizationId}`,
+  );
+
+  return response.data.organization;
+}

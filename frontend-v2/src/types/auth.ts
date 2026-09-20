@@ -3,6 +3,14 @@ export type UserRole =
   | "ORG_ADMIN"
   | "PLATFORM_ADMIN";
 
+export interface OrganizationMembership {
+  id: number;
+  name: string;
+  slug: string;
+  role: "ORG_ADMIN";
+  status: string;
+}
+
 export interface User {
   id: number;
   name: string;
@@ -10,6 +18,7 @@ export interface User {
   role: UserRole;
   status: string;
   total_hours?: number;
+  organizations: OrganizationMembership[];
 }
 
 export interface AuthResponse {

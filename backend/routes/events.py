@@ -107,6 +107,42 @@ def create_event_route(organization_id):
         },
     }, 201
 
+@events_bp.get("/organizations/<int:organization_id>/events")
+@organization_role_required("ORG_ADMIN")
+def list_organization_events(organization_id):
+    events = (
+        Event.query
+        .filter_by(organization_id=organization_id)
+        .order_by(Event.event_date.desc())
+        .all()
+    )
+
+    return {
+        "events": [
+            {
+                "id": event.id,
+                "title": event.title,
+                "slug": event.slug,
+                "description": event.description,
+                "event_date": event.event_date.isoformat(),
+                "start_time": (
+                    event.start_time.strftime("%H:%M")
+                    if event.start_time
+                    else None
+                ),
+                "end_time": (
+                    event.end_time.strftime("%H:%M")
+                    if event.end_time
+                    else None
+                ),
+                "capacity": event.capacity,
+                "status": event.status,
+                "city": event.city,
+                "location_name": event.location_name,
+            }
+            for event in events
+        ]
+    }, 200
 
 @events_bp.post("/organizations/<int:organization_id>/events/<int:event_id>/publish")
 @organization_role_required("ORG_ADMIN")
